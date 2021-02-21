@@ -29,22 +29,27 @@ import java.util.stream.Stream;
 public class StorageServiceImplementation implements StorageService {
 
 
-
     @Value("${resources.path}")
     private String userBucketPath;
 
+
+
     @Override
     public void init() {
+
+        File file = new File(userBucketPath);
+
+        if(file.mkdir())
+            System.out.println("Directory successfully created "+userBucketPath);
+        else
+            System.out.println("Directory exists!");
 
 
     }
 
     @Override
     public void store(MultipartFile file) throws IOException {
-
-        final File f = new File(StorageServiceImplementation.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-
-//        userBucketPath = Arrays.asList(System.getProperty("java.class.path") .split(";")).get(0) + "/static/";
+        this.init();
 
         file.transferTo(new File(userBucketPath+file.getOriginalFilename()));
 
