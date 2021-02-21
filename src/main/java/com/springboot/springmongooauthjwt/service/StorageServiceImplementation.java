@@ -1,8 +1,12 @@
 package com.springboot.springmongooauthjwt.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +44,7 @@ public class StorageServiceImplementation implements StorageService {
 
         final File f = new File(StorageServiceImplementation.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 
-
-        userBucketPath = Arrays.asList(System.getProperty("java.class.path") .split(";")).get(0) + "/static/";
+//        userBucketPath = Arrays.asList(System.getProperty("java.class.path") .split(";")).get(0) + "/static/";
 
         file.transferTo(new File(userBucketPath+file.getOriginalFilename()));
 
