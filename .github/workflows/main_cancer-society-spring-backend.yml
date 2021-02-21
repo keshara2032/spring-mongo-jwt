@@ -30,5 +30,4 @@ jobs:
         app-name: 'cancer-society-spring-backend'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_c7a4c4cc069f41639acd074a8479a678 }}
-        package: '${{ github.workspace }}/target/*.war'
-        task: PublishBuildArtifacts@1
+        package: '${{ github.workspace }}/target/*.jar'
