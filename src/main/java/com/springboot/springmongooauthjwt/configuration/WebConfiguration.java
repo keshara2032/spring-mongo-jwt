@@ -14,6 +14,6 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/static/**")
-                .addResourceLocations("file:/"+userBucketPath);
+                .addResourceLocations("file:"+userBucketPath);
     }
 }
