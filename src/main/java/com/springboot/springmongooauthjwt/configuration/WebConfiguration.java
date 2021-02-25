@@ -16,4 +16,6 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("file:"+userBucketPath);
     }
+
+    
 }

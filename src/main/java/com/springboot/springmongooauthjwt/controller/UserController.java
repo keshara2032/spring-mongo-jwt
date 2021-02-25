@@ -6,6 +6,7 @@ import com.springboot.springmongooauthjwt.middleware.JWTMiddleware;
 import com.springboot.springmongooauthjwt.model.JWTResponse;
 import com.springboot.springmongooauthjwt.model.News;
 import com.springboot.springmongooauthjwt.model.User;
+import com.springboot.springmongooauthjwt.response.Response;
 import com.springboot.springmongooauthjwt.service.NewsServiceImplementation;
 import com.springboot.springmongooauthjwt.service.StorageServiceImplementation;
 import com.springboot.springmongooauthjwt.service.UserServiceImplementation;
@@ -23,7 +24,9 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -88,16 +91,33 @@ public class UserController {
 
     // Test API for restricted access
     @CrossOrigin
-    @GetMapping("/restricted")
-    public  ResponseEntity<?> accessRestricted(){
-        return ResponseEntity.ok().body("welcome to secured level");
+    @GetMapping("/authenticate")
+    public  ResponseEntity<?> accessRestricted( @RequestHeader Map<String, String> headers){
+
+        headers.forEach((key, value) -> {
+            System.out.println( key +" : "+  value);
+        });
+
+        Response response = new Response();
+        response.setMessage("Authenticated");
+        response.setStatus(200);
+        response.setTimestamp(new Date());
+        return ResponseEntity.ok().body(response);
     }
+
+
+
 
 
     // API for getting authorization token
     @CrossOrigin
-    @PostMapping(value = "/auth")
-    public ResponseEntity<?> authenticateUser(@RequestBody User user){
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> authenticateUser(@RequestBody User user, @RequestHeader Map<String, String> headers  ){
+
+        headers.forEach((key, value) -> {
+            System.out.println( key +" : "+  value);
+        });
+
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getusername(),user.getPassword()));
