@@ -1,0 +1,7 @@
+spring.data.mongodb.database=${MONGO_DB}
+spring.data.mongodb.uri=${MONGO_DB_URI}
+
+
+server.servlet.context-path=/api/
+
+java.runtime.version=11
