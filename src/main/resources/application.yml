@@ -1,11 +1,11 @@
 jwt:
-  secret: secretkey123
+  secret: ${JWT_SECRET}
 
 cloud:
   aws:
     credentials:
-      access-key: AKIA2EZHJFUUEUZDQFWM
-      secret-key: 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
+      access-key: ${ACCESS_KEY_S3}
+      secret-key: ${SECRET_KEY_S3}
     region:
       static: us-east-1
     stack:
@@ -13,7 +13,7 @@ cloud:
 
 application:
   bucket:
-    name: cancerhomebucket
+    name: ${BUCKET_NAME_S3}
 
 
 spring:
