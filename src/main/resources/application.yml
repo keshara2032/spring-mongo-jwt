@@ -1,2 +1,25 @@
 jwt:
   secret: secretkey123
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA2EZHJFUUEUZDQFWM
+      secret-key: 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
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: cancerhomebucket
+
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB

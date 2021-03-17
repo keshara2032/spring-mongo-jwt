@@ -8,6 +8,7 @@ import com.springboot.springmongooauthjwt.model.News;
 import com.springboot.springmongooauthjwt.model.User;
 import com.springboot.springmongooauthjwt.response.Response;
 import com.springboot.springmongooauthjwt.service.NewsServiceImplementation;
+import com.springboot.springmongooauthjwt.service.S3StorageService;
 import com.springboot.springmongooauthjwt.service.StorageServiceImplementation;
 import com.springboot.springmongooauthjwt.service.UserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-public class UserController {
+public class Controller {
 
     @Autowired
     private StorageServiceImplementation storageServiceImplementation;
+
+    @Autowired
+    private S3StorageService s3StorageService;
 
     @Autowired
     private UserServiceImplementation userService;
@@ -54,11 +58,10 @@ public class UserController {
     @PostMapping(value = "/news/create", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<News> createNews(@RequestPart("news") News news, @RequestPart("file") MultipartFile file){
 
-        System.out.println(news.getTitle());
 
         try {
-            storageServiceImplementation.store(file);
-            news.setImg_uri(file.getOriginalFilename());
+            String url = s3StorageService.uploadFile(file);
+            news.setImg_uri(url);
 
         }catch (Exception e){
             throw new BadRequestException(e.getLocalizedMessage());
@@ -106,18 +109,12 @@ public class UserController {
     }
 
 
-
-
-
     // API for getting authorization token
     @CrossOrigin
     @PostMapping(value = "/login")
     public ResponseEntity<?> authenticateUser(@RequestBody User user, @RequestHeader Map<String, String> headers  ){
 
-        headers.forEach((key, value) -> {
-            System.out.println( key +" : "+  value);
-        });
-
+   
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getusername(),user.getPassword()));
