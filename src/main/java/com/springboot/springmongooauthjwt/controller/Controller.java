@@ -56,12 +56,20 @@ public class Controller {
     // API for creating a news post
     @CrossOrigin
     @PostMapping(value = "/news/create", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<News> createNews(@RequestPart("news") News news, @RequestPart("file") MultipartFile file){
+    public ResponseEntity<News> createNews(@RequestPart("title") String title, @RequestPart("body") String body , @RequestPart("file") MultipartFile file){
 
-        System.out.println(news.getTitle());
+        System.out.println(title +" " +body);
+
+
+        News news = new News();
+
+        news.setTitle(title);
+        news.setDescription(body);
+
 
         try {
             String url = s3StorageService.uploadFile(file);
+
             news.setImg_uri(url);
 
         }catch (Exception e){
