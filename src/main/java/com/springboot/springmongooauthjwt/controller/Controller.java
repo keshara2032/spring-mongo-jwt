@@ -58,6 +58,7 @@ public class Controller {
     @PostMapping(value = "/news/create", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<News> createNews(@RequestPart("news") News news, @RequestPart("file") MultipartFile file){
 
+        System.out.println(news);
 
         try {
             String url = s3StorageService.uploadFile(file);
