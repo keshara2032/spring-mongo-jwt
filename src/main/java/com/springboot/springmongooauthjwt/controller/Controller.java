@@ -56,15 +56,16 @@ public class Controller {
     // API for creating a news post
     @CrossOrigin
     @PostMapping(value = "/news/create", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<News> createNews(@RequestPart("title") String title, @RequestPart("body") String body , @RequestPart("file") MultipartFile file){
+    public ResponseEntity<News> createNews(@RequestPart("title") String title, @RequestPart("body") String body , @RequestPart("date") String date ,@RequestPart("file") MultipartFile file){
 
-        System.out.println(title +" " +body);
+        System.out.println(title +" " +body+" " + date);
 
 
         News news = new News();
 
         news.setTitle(title);
         news.setDescription(body);
+        news.setDate(date);
 
 
         try {
